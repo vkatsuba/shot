@@ -1,5 +1,6 @@
 .eunit
 deps
+_*
 *.o
 *.beam
 *.plt
@@ -7,4 +8,5 @@ erl_crash.dump
 ebin/*.beam
 rel/example_project
 .concrete/DEV_MODE
-.rebar
+.rebar3
+rebar.lock
