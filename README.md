@@ -84,7 +84,7 @@ shot:multipart(ReqMap).
 ```
 * Back to **Toilet** page, refresh page and see block **Dumps**
 
-### Еo be continued ...
+### To be continued ...
 
 ## Support
 v.katsuba.dev@gmail.com
