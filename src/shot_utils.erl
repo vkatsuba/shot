@@ -142,7 +142,6 @@ httpc_request(#{m := Method, u := URL, h := Headers, b := Body, ct := ContentTyp
   httpc:request(Method, {URL, maps:fold(fun(K, V, Acc) -> [{K, V} | Acc] end, [], Headers), ContentType, Body}, [?NO_REDIRECT], []);
 
 httpc_request(#{m := Method, u := URL, b := Body, ct := ContentType}) ->
-  io:format("B ~p~n", [Body]),
   httpc:request(Method, {URL, [], ContentType, Body}, [?NO_REDIRECT], []);
 
 httpc_request(#{m := Method, u := URL, h := Headers}) ->
