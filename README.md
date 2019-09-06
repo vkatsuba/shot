@@ -45,9 +45,27 @@ shot:put("http://httpbin.org/put").
 ```erlang
 shot:get("http://httpbin.org/get").
 ```
+```erlang
+Data = #{
+  u => "https://httpbin.org/bearer",                % URL string, eg: "http://test.com"
+  h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
+}.
+shot:get(Data).
+```
 ### POST
 ```erlang
 shot:post("http://httpbin.org/post").
+```
+```erlang
+Data = #{
+  u => "https://httpbin.org/anything",                  % URL string, eg: "http://test.com"
+  b => "{\"foo\":[\"bing\",2.3,true]}",                 % Body data
+  ct => "application/json",                             % Content-Type, eg: "application/json"
+  h => #{                                               % Headers
+    "Authorization" => "Basic dmthdHN1YmE6JDFxMnczZTQk"
+  }
+}.
+shot:post(Data).
 ```
 ### DELETE
 ```erlang

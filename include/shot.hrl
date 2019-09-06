@@ -9,5 +9,6 @@
 -define(CIPHERS, [[{ciphers, [{rsa, aes_128_cbc, sha}]}]]).
 -define(SSLC, {ssl, ?CIPHERS}).
 -define(BOUNDARY, "----WebKitFormBoundaryShot").
+-define(BAD_ARG, {error, bad_arg}).
 
 -endif.

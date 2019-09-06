@@ -6,13 +6,13 @@
 %%% ==================================================================
 
 -export([
-  to_binary/1,
   get_code/1,
   get_body/1,
   redirect/1,
   catch_redirect/1,
   http/1,
-  multipart/1
+  multipart/1,
+  httpc_request/1
 ]).
 
 %%% ==================================================================
@@ -27,11 +27,13 @@
 
 %% -------------------------------------------------------------------
 %% @doc
-%% httpc request without headers
+%% httpc request with/without headers
 %% @end
 %% -------------------------------------------------------------------
 -spec http(Params :: maps:map()) -> {ok, Result :: tuple()} | {error, Reason :: tuple()}.
 
+http(#{m := _, u := _, b := _, ct := _} = Data) -> httpc_request(Data);
+http(#{m := _, u := _, h := _} = Data) -> httpc_request(Data);
 http(#{m := post, u := URL}) -> httpc:request(post, {URL, [], [], []}, [], []);
 http(#{m := Method, u := URL}) -> httpc:request(Method, {URL, []}, [?NO_REDIRECT], []).
 
@@ -93,20 +95,6 @@ redirect({{_, 301, _}, Headers, _}) -> http(#{m => get, u => proplists:get_value
 catch_redirect({{_, 301, _}, Headers, _} = Resp) -> proplists:get_value("location", Headers, Resp);
 catch_redirect(Resp) -> Resp.
 
-%% -------------------------------------------------------------------
-%% @doc
-%% Convert any to binary
-%% @end
-%% -------------------------------------------------------------------
--spec to_binary(Data) -> Result :: binary() when Data :: atom() | list() | binary().
-
-to_binary(Data) when is_binary(Data)  -> Data;
-to_binary(Data) when is_atom(Data)    -> list_to_binary(atom_to_list(Data));
-to_binary(Data) when is_list(Data)    -> list_to_binary([to_binary(El) || El <- Data]);
-to_binary(Data) when is_integer(Data) -> integer_to_binary(Data);
-to_binary(Data) when is_tuple(Data)   -> to_binary([to_binary(El) || El <- tuple_to_list(Data)]);
-to_binary(Data) when is_map(Data)     -> to_binary([to_binary(El) || El <- maps:to_list(Data)]).
-
 %%% ==================================================================
 %%% Internal/Private functions
 %%% ==================================================================
@@ -141,3 +129,21 @@ fname(Path) ->
   L = binary:split(list_to_binary(Path), <<"/">>, [global]),
   [H|_] = lists:reverse(L),
   binary_to_list(H).
+
+%% -------------------------------------------------------------------
+%% @doc
+%% HTTPC request with/without headers
+%% #{m => get, u => "https://httpbin.org/bearer", h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}}
+%% @end
+%% -------------------------------------------------------------------
+-spec httpc_request(Params :: maps:map()) -> {ok, Result :: tuple()} | {error, Reason :: tuple()}.
+
+httpc_request(#{m := Method, u := URL, h := Headers, b := Body, ct := ContentType}) ->
+  httpc:request(Method, {URL, maps:fold(fun(K, V, Acc) -> [{K, V} | Acc] end, [], Headers), ContentType, Body}, [?NO_REDIRECT], []);
+
+httpc_request(#{m := Method, u := URL, b := Body, ct := ContentType}) ->
+  io:format("B ~p~n", [Body]),
+  httpc:request(Method, {URL, [], ContentType, Body}, [?NO_REDIRECT], []);
+
+httpc_request(#{m := Method, u := URL, h := Headers}) ->
+  httpc:request(Method, {URL, maps:fold(fun(K, V, Acc) -> [{K, V} | Acc] end, [], Headers)}, [?NO_REDIRECT], []).
