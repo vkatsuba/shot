@@ -15,6 +15,15 @@ $ git clone https://github.com/vkatsuba/shot.git
 $ cd shot
 $ make
 ```
+### Run Common Tests
+```sh
+# See result in _build/test/logs after tests pass
+$ make ct
+```
+### Clean Project
+```sh
+$ make clean
+```
 ### Install shot to project: [Rebar3](https://www.rebar3.org/)
 * Edit file **rebar.config**:
 ```
@@ -39,13 +48,16 @@ $ make
 ```
 ### PUT
 ```erlang
+% PUT without headers
 shot:put("http://httpbin.org/put").
 ```
 ### GET
 ```erlang
+% GET without headers
 shot:get("http://httpbin.org/get").
 ```
 ```erlang
+% GET with headers
 Data = #{
   u => "https://httpbin.org/bearer",                % URL string, eg: "http://test.com"
   h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
@@ -54,9 +66,11 @@ shot:get(Data).
 ```
 ### POST
 ```erlang
+% POST without headers
 shot:post("http://httpbin.org/post").
 ```
 ```erlang
+% POST with headers
 Data = #{
   u => "https://httpbin.org/anything",                  % URL string, eg: "http://test.com"
   b => "{\"foo\":[\"bing\",2.3,true]}",                 % Body data
@@ -69,6 +83,7 @@ shot:post(Data).
 ```
 ### DELETE
 ```erlang
+% DELETE without headers
 shot:delete("http://httpbin.org/delete").
 ```
 ### multipart/form-data
@@ -89,8 +104,8 @@ ReqMap = #{
 
 shot:multipart(ReqMap).
 ```
-* response
 ```sh
+% Response
 {ok,{{"HTTP/1.1",200,"OK"},
      [{"date","Tue, 05 Mar 2019 20:38:51 GMT"},
       {"server","Google Frontend"},

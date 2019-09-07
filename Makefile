@@ -21,3 +21,6 @@ stop:
 
 clean:
 	rm -rf _build & rm -rf rebar.lock & rm -rf rebar3.crashdump
+
+ct:
+	$(REBAR) ct
