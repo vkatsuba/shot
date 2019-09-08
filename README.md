@@ -51,6 +51,14 @@ $ make clean
 % PUT without headers
 shot:put("http://httpbin.org/put").
 ```
+```erlang
+% PUT with headers
+Data = #{
+  u => "https://httpbin.org/anything",              % URL string, eg: "http://test.com"
+  h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
+}.
+shot:put(Data).
+```
 ### GET
 ```erlang
 % GET without headers
@@ -85,6 +93,14 @@ shot:post(Data).
 ```erlang
 % DELETE without headers
 shot:delete("http://httpbin.org/delete").
+```
+```erlang
+% DELETE with headers
+Data = #{
+  u => "https://httpbin.org/anything",              % URL string, eg: "http://test.com"
+  h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
+}.
+shot:delete(Data).
 ```
 ### multipart/form-data
 * Create file file **test.dat** with any data
