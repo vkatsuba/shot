@@ -132,7 +132,8 @@ end_per_suite(Config) ->
 -spec shot_put_without_headers_must_ok(config()) -> ok.
 
 shot_put_without_headers_must_ok(_Config) ->
-  case shot:put("http://httpbin.org/put") of
+  {ok, Url} = application:get_env(urls, put),
+  case shot:put(Url) of
     {ok, HttpcResult} ->
       case shot_utils:get_code(HttpcResult) of
         200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
@@ -154,7 +155,8 @@ shot_put_without_headers_must_ok(_Config) ->
 -spec shot_get_without_headers_must_ok(config()) -> ok.
 
 shot_get_without_headers_must_ok(_Config) ->
-  case shot:get("http://httpbin.org/get") of
+  {ok, Url} = application:get_env(urls, get),
+  case shot:get(Url) of
     {ok, HttpcResult} ->
       case shot_utils:get_code(HttpcResult) of
         200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
@@ -172,8 +174,9 @@ shot_get_without_headers_must_ok(_Config) ->
 -spec shot_get_with_headers_must_ok(config()) -> ok.
 
 shot_get_with_headers_must_ok(_Config) ->
+  {ok, Url} = application:get_env(urls, bearer),
   Data = #{
-    u => "https://httpbin.org/bearer",
+    u => Url,
     h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}
   },
   case shot:get(Data) of
@@ -198,7 +201,8 @@ shot_get_with_headers_must_ok(_Config) ->
 -spec shot_post_without_headers_must_ok(config()) -> ok.
 
 shot_post_without_headers_must_ok(_Config) ->
-  case shot:post("http://httpbin.org/post") of
+  {ok, Url} = application:get_env(urls, post),
+  case shot:post(Url) of
     {ok, HttpcResult} ->
       case shot_utils:get_code(HttpcResult) of
         200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
@@ -216,8 +220,9 @@ shot_post_without_headers_must_ok(_Config) ->
 -spec shot_post_with_headers_must_ok(config()) -> ok.
 
 shot_post_with_headers_must_ok(_Config) ->
+  {ok, Url} = application:get_env(urls, anything),
   Data = #{
-    u => "https://httpbin.org/anything",
+    u => Url,
     b => "{\"foo\":[\"bing\",2.3,true]}",
     ct => "application/json",
     h => #{"Authorization" => "Basic dmthdHN1YmE6JDFxMnczZTQk"}
@@ -244,7 +249,8 @@ shot_post_with_headers_must_ok(_Config) ->
 -spec shot_delete_without_headers_must_ok(config()) -> ok.
 
 shot_delete_without_headers_must_ok(_Config) ->
-  case shot:delete("http://httpbin.org/delete") of
+  {ok, Url} = application:get_env(urls, delete),
+  case shot:delete(Url) of
     {ok, HttpcResult} ->
       case shot_utils:get_code(HttpcResult) of
         200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
