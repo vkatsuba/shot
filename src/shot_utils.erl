@@ -32,10 +32,17 @@
 %% -------------------------------------------------------------------
 -spec http(Params :: maps:map()) -> {ok, Result :: tuple()} | {error, Reason :: tuple()}.
 
-http(#{m := _, u := _, b := _, ct := _} = Data) -> httpc_request(Data);
-http(#{m := _, u := _, h := _} = Data) -> httpc_request(Data);
-http(#{m := post, u := URL}) -> httpc:request(post, {URL, [], [], []}, [], []);
-http(#{m := Method, u := URL}) -> httpc:request(Method, {URL, []}, [?NO_REDIRECT], []).
+http(#{m := _, u := _, b := _, ct := _} = Data) ->
+  httpc_request(Data);
+
+http(#{m := _, u := _, h := _} = Data) ->
+  httpc_request(Data);
+
+http(#{m := post, u := URL}) ->
+  httpc:request(post, {URL, [], [], []}, [], []);
+
+http(#{m := Method, u := URL}) ->
+  httpc:request(Method, {URL, []}, [?NO_REDIRECT], []).
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -54,7 +61,9 @@ multipart(#{m := M, u := U, p := P, o := O, cd := CD, ct := CT}) when M =:= post
       httpc:request(M, {U, ReqHeader, ContentType, ReqBody}, O, []);
     _ -> {error, <<"Cannot find file">>}
   end;
-multipart(_) -> {error, <<"Shot Error: The method not allowed">>}.
+
+multipart(_) ->
+  {error, <<"Shot Error: The method not allowed">>}.
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -63,7 +72,8 @@ multipart(_) -> {error, <<"Shot Error: The method not allowed">>}.
 %% -------------------------------------------------------------------
 -spec get_code(HttpcResult :: tuple()) -> Code :: pos_integer().
 
-get_code({{_, Code, _}, _, _}) -> Code.
+get_code({{_, Code, _}, _, _}) ->
+  Code.
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -72,7 +82,8 @@ get_code({{_, Code, _}, _, _}) -> Code.
 %% -------------------------------------------------------------------
 -spec get_body(HttpcResult :: tuple()) -> Body :: list().
 
-get_body({_, _, Body}) -> Body.
+get_body({_, _, Body}) ->
+  Body.
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -83,7 +94,8 @@ get_body({_, _, Body}) -> Body.
 %% -------------------------------------------------------------------
 -spec redirect(HttpcResult :: tuple()) -> {ok, Result :: tuple()} | {error, Reason :: tuple()}.
 
-redirect({{_, 301, _}, Headers, _}) -> http(#{m => get, u => proplists:get_value("location", Headers)}).
+redirect({{_, 301, _}, Headers, _}) ->
+  http(#{m => get, u => proplists:get_value("location", Headers)}).
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -92,8 +104,11 @@ redirect({{_, 301, _}, Headers, _}) -> http(#{m => get, u => proplists:get_value
 %% -------------------------------------------------------------------
 -spec catch_redirect(HttpcResult :: tuple()) -> Result :: tuple() | list().
 
-catch_redirect({{_, 301, _}, Headers, _} = Resp) -> proplists:get_value("location", Headers, Resp);
-catch_redirect(Resp) -> Resp.
+catch_redirect({{_, 301, _}, Headers, _} = Resp) ->
+  proplists:get_value("location", Headers, Resp);
+
+catch_redirect(Resp) ->
+  Resp.
 
 %%% ==================================================================
 %%% Internal/Private functions
