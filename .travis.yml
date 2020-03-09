@@ -17,10 +17,7 @@ otp_release:
 env:
   global:
     - DEBUG=on
-notifications:
-    webhooks:
-        - https://buildtimetrend.herokuapp.com/travis
-    on_start: always
+
 # blocklist
 branches:
   except:
