@@ -1,0 +1,27 @@
+language: erlang
+dist: xenial
+sudo: required
+addons:
+    apt:
+        packages:
+        #- build-essential
+        - sqlite3
+    hosts:
+        - localhost
+before_install:
+        - git config --global url."git://github".insteadOf https://github
+#install:
+#        - xxx
+otp_release:
+        - 22.0
+env:
+  global:
+    - DEBUG=on
+notifications:
+    webhooks:
+        - https://buildtimetrend.herokuapp.com/travis
+    on_start: always
+# blocklist
+branches:
+  except:
+  - master
