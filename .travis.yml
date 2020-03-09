@@ -1,0 +1,32 @@
+language: erlang
+dist: xenial
+sudo: required
+
+before_script:
+  - wget https://s3.amazonaws.com/rebar3/rebar3
+  - chmod u+x ./rebar3
+
+#install:
+#        - xxx
+otp_release:
+  - 23.0.4
+env:
+  global:
+    - DEBUG=on
+    
+script:
+  - ./rebar3 compile
+  - ./rebar3 ct
+  - retVal=$?
+  - if [ $retVal -ne 0 ]; then
+      export travis_test=travis_test;
+      ./rebar3 ct;
+    fi
+  
+#after_failure:
+#  - travis restart #echo $?
+
+# blocklist
+branches:
+  except:
+  - master

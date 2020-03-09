@@ -45,9 +45,12 @@
   shot_delete_without_headers_must_ok/1
 ]).
 
+-export([test_travis/1]).
+
 %%% ==================================================================
 %%% Includes
 %%% ==================================================================
+-include_lib("common_test/include/ct.hrl").
 -include("shot.hrl").
 
 %%% ==================================================================
@@ -72,7 +75,8 @@ all() ->
     {group, shot_put},
     {group, shot_get},
     {group, shot_post},
-    {group, shot_delete}
+    {group, shot_delete},
+    {group, travis}
   ].
 
 %% -------------------------------------------------------------------
@@ -83,7 +87,10 @@ all() ->
 -spec groups() -> lists:list().
 
 groups() ->
-[
+ct_helper:repeat_all_until_all_ok([
+{travis, [sequence], [
+  test_travis
+]},
   {shot_put, [sequence], [
     shot_put_without_headers_must_ok
   ]},
@@ -98,7 +105,7 @@ groups() ->
   {shot_delete, [sequence], [
     shot_delete_without_headers_must_ok
   ]}
-].
+]).
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -123,6 +130,14 @@ end_per_suite(Config) ->
 %%% ==================================================================
 %%% Test cases for PUT request with/without headers (shot:put/1)
 %%% ==================================================================
+
+test_travis(_) ->
+    case os:getenv("travis_test") of 
+    	false ->
+    		ct:fail("fail");
+    	_ ->
+            ct:comment("~p", ["comment"])
+    end.
 
 %% -------------------------------------------------------------------
 %% @doc

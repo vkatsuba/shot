@@ -8,5 +8,5 @@ erl_crash.dump
 ebin/*.beam
 rel/example_project
 .concrete/DEV_MODE
-.rebar3
+rebar3
 rebar.lock
