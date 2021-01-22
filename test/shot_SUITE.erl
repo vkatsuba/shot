@@ -132,8 +132,9 @@ end_per_suite(Config) ->
 %%% ==================================================================
 
 test_travis(_) ->
-    case os:getenv("travis_test") of 
+    case persistent_term:get(tester, false) of 
     	false ->
+    		persistent_term:put(tester, true),
     		ct:fail("fail");
     	_ ->
             ct:comment("~p", ["comment"])
