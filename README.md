@@ -13,16 +13,17 @@ For examples will be used **shot** and test services for requests:
 ```sh
 $ git clone https://github.com/vkatsuba/shot.git
 $ cd shot
-$ make
+$ wget https://s3.amazonaws.com/rebar3/rebar3
+$ chmod u+x ./rebar3
 ```
 ### Run Common Tests
 ```sh
 # See result in _build/test/logs after tests pass
-$ make ct
+$ ./rebar3 ct
 ```
 ### Clean Project
 ```sh
-$ make clean
+$ ./rebar3 clean
 ```
 ### Install shot to project: [Rebar3](https://www.rebar3.org/)
 * Edit file **rebar.config**:
@@ -30,20 +31,9 @@ $ make clean
 ...
 {deps, [
   ...
-  {shot, {git, "git://github.com/vkatsuba/shot.git", {branch, "master"}}},
+  {shot, "1.0.0"},
   ...
 ]}.
-...
-```
-* Edit file ***.app.src**:
-```
-...
-  {applications,
-   [
-    ...,
-    shot,
-    ...
-   ]},
 ...
 ```
 ### PUT
