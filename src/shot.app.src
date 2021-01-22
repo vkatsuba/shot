@@ -2,7 +2,7 @@
  [{description, "Shot is a small HTTP client library"},
   {vsn, "0.1.0"},
   {registered, []},
-  {mod, { shot_app, []}},
+  {mod, {shot_app, []}},
   {applications,
    [kernel,
     stdlib,
