@@ -15,26 +15,27 @@ $ git clone https://github.com/vkatsuba/shot.git
 $ cd shot
 $ wget https://s3.amazonaws.com/rebar3/rebar3
 $ chmod u+x ./rebar3
+$ ./rebar3 shell
+```
+### Dialyzer
+```sh
+$ ./rebar3 dialyzer
 ```
 ### Run Common Tests
 ```sh
 # See result in _build/test/logs after tests pass
-$ ./rebar3 ct
+$ ./rebar3 do xref, ct
 ```
 ### Clean Project
 ```sh
 $ ./rebar3 clean
 ```
-### Install shot to project: [Rebar3](https://www.rebar3.org/)
+### Add `shot` to project: [Rebar3](https://www.rebar3.org/)
 * Edit file **rebar.config**:
-```
-...
+```erlang
 {deps, [
-  ...
-  {shot, "1.0.0"},
-  ...
+    {shot, "1.0.0"},
 ]}.
-...
 ```
 ### PUT
 ```erlang
@@ -44,8 +45,8 @@ shot:put("http://httpbin.org/put").
 ```erlang
 % PUT with headers
 Data = #{
-  u => "https://httpbin.org/anything",              % URL string, eg: "http://test.com"
-  h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
+    u => "https://httpbin.org/anything",              % URL string, eg: "http://test.com"
+    h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
 }.
 shot:put(Data).
 ```
@@ -57,8 +58,8 @@ shot:get("http://httpbin.org/get").
 ```erlang
 % GET with headers
 Data = #{
-  u => "https://httpbin.org/bearer",                % URL string, eg: "http://test.com"
-  h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
+    u => "https://httpbin.org/bearer",                % URL string, eg: "http://test.com"
+    h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
 }.
 shot:get(Data).
 ```
@@ -70,12 +71,10 @@ shot:post("http://httpbin.org/post").
 ```erlang
 % POST with headers
 Data = #{
-  u => "https://httpbin.org/anything",                  % URL string, eg: "http://test.com"
-  b => "{\"foo\":[\"bing\",2.3,true]}",                 % Body data
-  ct => "application/json",                             % Content-Type, eg: "application/json"
-  h => #{                                               % Headers
-    "Authorization" => "Basic dmthdHN1YmE6JDFxMnczZTQk"
-  }
+    u => "https://httpbin.org/anything",                        % URL string, eg: "http://test.com"
+    b => "{\"foo\":[\"bing\",2.3,true]}",                       % Body data
+    ct => "application/json",                                   % Content-Type, eg: "text/html"
+    h => #{"Authorization" => "Basic dmthdHN1YmE6JDFxMnczZTQk"} % Headers
 }.
 shot:post(Data).
 ```
@@ -87,8 +86,8 @@ shot:delete("http://httpbin.org/delete").
 ```erlang
 % DELETE with headers
 Data = #{
-  u => "https://httpbin.org/anything",              % URL string, eg: "http://test.com"
-  h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
+    u => "https://httpbin.org/anything",              % URL string, eg: "http://test.com"
+    h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}  % Headers
 }.
 shot:delete(Data).
 ```
@@ -100,12 +99,12 @@ shot:delete(Data).
 * Prepare and create request:
 ```erlang
 ReqMap = #{
-  m => post,                        % Method, can be POST, PUT atom only, eg: post, put
-  u => "http://ptsv2.com/ID/post",  % URL string, eg: "http://test.com"
-  p => "/path/to/test.dat",         % Full path to file, eg: "/path/to/file.dat"
-  o => [],                          % Options, eg: [{ssl, [[{ciphers, [{rsa, aes_128_cbc, sha}]}]]}]
-  cd => "test-data",                % Content-Disposition, eg: "dat-model"
-  ct => ""                          % Content-Type, eg: "application/json"
+    m => post,                       % Method, can be POST, PUT atom only, eg: post, put
+    u => "http://ptsv2.com/ID/post", % URL string, eg: "http://test.com"
+    p => "/path/to/test.dat",        % Full path to file, eg: "/path/to/file.dat"
+    o => [],                         % Options, eg: [{ssl,[[{ciphers,[{rsa,aes_128_cbc,sha}]}]]}]
+    cd => "test-data",               % Content-Disposition, eg: "dat-model"
+    ct => ""                         % Content-Type, eg: "application/json"
 }.
 
 shot:multipart(ReqMap).

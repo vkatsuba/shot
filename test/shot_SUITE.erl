@@ -27,10 +27,10 @@
 %%% ==================================================================
 
 -export([
-  all/0,
-  groups/0,
-  init_per_suite/1,
-  end_per_suite/1
+    all/0,
+    groups/0,
+    init_per_suite/1,
+    end_per_suite/1
 ]).
 
 %%% ==================================================================
@@ -38,7 +38,7 @@
 %%% ==================================================================
 
 -export([
-  shot_put_without_headers_must_ok/1
+    shot_put_without_headers_must_ok/1
 ]).
 
 %%% ==================================================================
@@ -46,8 +46,8 @@
 %%% ==================================================================
 
 -export([
-  shot_get_without_headers_must_ok/1,
-  shot_get_with_headers_must_ok/1
+    shot_get_without_headers_must_ok/1,
+    shot_get_with_headers_must_ok/1
 ]).
 
 %%% ==================================================================
@@ -55,8 +55,8 @@
 %%% ==================================================================
 
 -export([
-  shot_post_without_headers_must_ok/1,
-  shot_post_with_headers_must_ok/1
+    shot_post_without_headers_must_ok/1,
+    shot_post_with_headers_must_ok/1
 ]).
 
 %%% ==================================================================
@@ -64,7 +64,7 @@
 %%% ==================================================================
 
 -export([
-  shot_delete_without_headers_must_ok/1
+    shot_delete_without_headers_must_ok/1
 ]).
 
 %%% ==================================================================
@@ -85,12 +85,12 @@
 -spec all() -> lists:list().
 
 all() ->
-  [
-    {group, shot_put},
-    {group, shot_get},
-    {group, shot_post},
-    {group, shot_delete}
-  ].
+    [
+        {group, shot_put},
+        {group, shot_get},
+        {group, shot_post},
+        {group, shot_delete}
+    ].
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -100,22 +100,22 @@ all() ->
 -spec groups() -> lists:list().
 
 groups() ->
-[
-  {shot_put, [sequence], [
-    shot_put_without_headers_must_ok
-  ]},
-  {shot_get, [sequence], [
-    shot_get_without_headers_must_ok,
-    shot_get_with_headers_must_ok
-  ]},
-  {shot_post, [sequence], [
-    shot_post_without_headers_must_ok,
-    shot_post_with_headers_must_ok
-  ]},
-  {shot_delete, [sequence], [
-    shot_delete_without_headers_must_ok
-  ]}
-].
+    [
+        {shot_put, [sequence], [
+            shot_put_without_headers_must_ok
+        ]},
+        {shot_get, [sequence], [
+            shot_get_without_headers_must_ok,
+            shot_get_with_headers_must_ok
+        ]},
+        {shot_post, [sequence], [
+            shot_post_without_headers_must_ok,
+            shot_post_with_headers_must_ok
+        ]},
+        {shot_delete, [sequence], [
+            shot_delete_without_headers_must_ok
+        ]}
+    ].
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -125,7 +125,7 @@ groups() ->
 -spec init_per_suite(config()) -> config().
 
 init_per_suite(Config) ->
-  Config.
+    Config.
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -135,7 +135,7 @@ init_per_suite(Config) ->
 -spec end_per_suite(config()) -> config().
 
 end_per_suite(Config) ->
-  Config.
+    Config.
 
 %%% ==================================================================
 %%% Test cases for PUT request with/without headers (shot:put/1)
@@ -149,15 +149,17 @@ end_per_suite(Config) ->
 -spec shot_put_without_headers_must_ok(config()) -> ok.
 
 shot_put_without_headers_must_ok(_Config) ->
-  case shot:put("http://httpbin.org/put") of
-    {ok, HttpcResult} ->
-      case shot_utils:get_code(HttpcResult) of
-        200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
-        _ -> ct:fail("shot_put_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
-      end;
-    {error, Reason} ->
-      ct:fail(Reason)
-  end.
+    case shot:put("http://httpbin.org/put") of
+        {ok, HttpcResult} ->
+            case shot_utils:get_code(HttpcResult) of
+                200 ->
+                    ct:comment("HttpcResult = ~p", [HttpcResult]);
+                _ ->
+                    ct:fail("shot_put_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
+            end;
+        {error, Reason} ->
+            ct:fail(Reason)
+    end.
 
 %%% ==================================================================
 %%% Test cases for GET request with/without headers (shot:get/1)
@@ -171,15 +173,17 @@ shot_put_without_headers_must_ok(_Config) ->
 -spec shot_get_without_headers_must_ok(config()) -> ok.
 
 shot_get_without_headers_must_ok(_Config) ->
-  case shot:get("http://httpbin.org/get") of
-    {ok, HttpcResult} ->
-      case shot_utils:get_code(HttpcResult) of
-        200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
-        _ -> ct:fail("shot_get_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
-      end;
-    {error, Reason} ->
-      ct:fail(Reason)
-  end.
+    case shot:get("http://httpbin.org/get") of
+        {ok, HttpcResult} ->
+            case shot_utils:get_code(HttpcResult) of
+                200 ->
+                    ct:comment("HttpcResult = ~p", [HttpcResult]);
+                _ ->
+                    ct:fail("shot_get_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
+            end;
+        {error, Reason} ->
+            ct:fail(Reason)
+    end.
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -189,19 +193,21 @@ shot_get_without_headers_must_ok(_Config) ->
 -spec shot_get_with_headers_must_ok(config()) -> ok.
 
 shot_get_with_headers_must_ok(_Config) ->
-  Data = #{
-    u => "https://httpbin.org/bearer",
-    h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}
-  },
-  case shot:get(Data) of
-    {ok, HttpcResult} ->
-      case shot_utils:get_code(HttpcResult) of
-        200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
-        _ -> ct:fail("shot_get_with_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
-      end;
-    {error, Reason} ->
-      ct:fail(Reason)
-  end.
+    Data = #{
+        u => "https://httpbin.org/bearer",
+        h => #{"Authorization" => "Bearer dXNlcjpwYXNz"}
+    },
+    case shot:get(Data) of
+        {ok, HttpcResult} ->
+            case shot_utils:get_code(HttpcResult) of
+                200 ->
+                    ct:comment("HttpcResult = ~p", [HttpcResult]);
+                _ ->
+                    ct:fail("shot_get_with_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
+            end;
+        {error, Reason} ->
+            ct:fail(Reason)
+    end.
 
 %%% ==================================================================
 %%% Test cases for POST request with/without headers (shot:post/1)
@@ -215,15 +221,17 @@ shot_get_with_headers_must_ok(_Config) ->
 -spec shot_post_without_headers_must_ok(config()) -> ok.
 
 shot_post_without_headers_must_ok(_Config) ->
-  case shot:post("http://httpbin.org/post") of
-    {ok, HttpcResult} ->
-      case shot_utils:get_code(HttpcResult) of
-        200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
-        _ -> ct:fail("shot_post_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
-      end;
-    {error, Reason} ->
-      ct:fail(Reason)
-  end.
+    case shot:post("http://httpbin.org/post") of
+        {ok, HttpcResult} ->
+            case shot_utils:get_code(HttpcResult) of
+                200 ->
+                    ct:comment("HttpcResult = ~p", [HttpcResult]);
+                _ ->
+                    ct:fail("shot_post_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
+            end;
+        {error, Reason} ->
+            ct:fail(Reason)
+    end.
 
 %% -------------------------------------------------------------------
 %% @doc
@@ -233,21 +241,23 @@ shot_post_without_headers_must_ok(_Config) ->
 -spec shot_post_with_headers_must_ok(config()) -> ok.
 
 shot_post_with_headers_must_ok(_Config) ->
-  Data = #{
-    u => "https://httpbin.org/anything",
-    b => "{\"foo\":[\"bing\",2.3,true]}",
-    ct => "application/json",
-    h => #{"Authorization" => "Basic dmthdHN1YmE6JDFxMnczZTQk"}
-  },
-  case shot:post(Data) of
-    {ok, HttpcResult} ->
-      case shot_utils:get_code(HttpcResult) of
-        200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
-        _ -> ct:fail("shot_post_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
-      end;
-    {error, Reason} ->
-      ct:fail(Reason)
-  end.
+    Data = #{
+        u => "https://httpbin.org/anything",
+        b => "{\"foo\":[\"bing\",2.3,true]}",
+        ct => "application/json",
+        h => #{"Authorization" => "Basic dmthdHN1YmE6JDFxMnczZTQk"}
+    },
+    case shot:post(Data) of
+        {ok, HttpcResult} ->
+        case shot_utils:get_code(HttpcResult) of
+            200 ->
+                ct:comment("HttpcResult = ~p", [HttpcResult]);
+            _ ->
+                ct:fail("shot_post_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
+        end;
+        {error, Reason} ->
+            ct:fail(Reason)
+    end.
 
 %%% ==================================================================
 %%% Test cases for DELETE request with/without headers (shot:delete/1)
@@ -261,12 +271,14 @@ shot_post_with_headers_must_ok(_Config) ->
 -spec shot_delete_without_headers_must_ok(config()) -> ok.
 
 shot_delete_without_headers_must_ok(_Config) ->
-  case shot:delete("http://httpbin.org/delete") of
-    {ok, HttpcResult} ->
-      case shot_utils:get_code(HttpcResult) of
-        200 -> ct:comment("HttpcResult = ~p", [HttpcResult]);
-        _ -> ct:fail("shot_delete_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
-      end;
-    {error, Reason} ->
-      ct:fail(Reason)
-  end.
+    case shot:delete("http://httpbin.org/delete") of
+        {ok, HttpcResult} ->
+            case shot_utils:get_code(HttpcResult) of
+                200 ->
+                    ct:comment("HttpcResult = ~p", [HttpcResult]);
+                _ ->
+                    ct:fail("shot_delete_without_headers_must_ok/1 failed (HTTP response code MUST be equal to 200): ~p", [HttpcResult])
+            end;
+        {error, Reason} ->
+            ct:fail(Reason)
+    end.

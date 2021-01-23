@@ -1,18 +1,16 @@
-{application, shot,
- [{description, "Shot is a small HTTP client library"},
-  {vsn, semver},
-  {registered, []},
-  {mod, {shot_app, []}},
-  {applications,
-   [kernel,
-    stdlib,
-    inets,
-    ssl
-   ]},
-  {env,[]},
-  {modules, []},
-
-  {maintainers, []},
-  {licenses, ["MIT"]},
-  {links, [{"Github", "https://github.com/vkatsuba/shot"}]}
- ]}.
+{application, shot, [
+    {description, "Shot is a small HTTP client library"},
+    {vsn, semver},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib,
+        inets,
+        ssl
+    ]},
+    {env, []},
+    {modules, []},
+    {maintainers, []},
+    {licenses, ["MIT"]},
+    {links, [{"Github", "https://github.com/vkatsuba/shot"}]}
+]}.
