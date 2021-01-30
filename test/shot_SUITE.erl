@@ -151,7 +151,7 @@ end_per_suite(Config) ->
 shot_put_without_headers_must_ok(_Config) ->
     case shot:put("http://httpbin.org/put") of
         {ok, HttpcResult} ->
-            case shot_utils:get_code(HttpcResult) of
+            case shot:get_code(HttpcResult) of
                 200 ->
                     ct:comment("HttpcResult = ~p", [HttpcResult]);
                 _ ->
@@ -175,7 +175,7 @@ shot_put_without_headers_must_ok(_Config) ->
 shot_get_without_headers_must_ok(_Config) ->
     case shot:get("http://httpbin.org/get") of
         {ok, HttpcResult} ->
-            case shot_utils:get_code(HttpcResult) of
+            case shot:get_code(HttpcResult) of
                 200 ->
                     ct:comment("HttpcResult = ~p", [HttpcResult]);
                 _ ->
@@ -199,7 +199,7 @@ shot_get_with_headers_must_ok(_Config) ->
     },
     case shot:get(Data) of
         {ok, HttpcResult} ->
-            case shot_utils:get_code(HttpcResult) of
+            case shot:get_code(HttpcResult) of
                 200 ->
                     ct:comment("HttpcResult = ~p", [HttpcResult]);
                 _ ->
@@ -223,7 +223,7 @@ shot_get_with_headers_must_ok(_Config) ->
 shot_post_without_headers_must_ok(_Config) ->
     case shot:post("http://httpbin.org/post") of
         {ok, HttpcResult} ->
-            case shot_utils:get_code(HttpcResult) of
+            case shot:get_code(HttpcResult) of
                 200 ->
                     ct:comment("HttpcResult = ~p", [HttpcResult]);
                 _ ->
@@ -249,7 +249,7 @@ shot_post_with_headers_must_ok(_Config) ->
     },
     case shot:post(Data) of
         {ok, HttpcResult} ->
-        case shot_utils:get_code(HttpcResult) of
+        case shot:get_code(HttpcResult) of
             200 ->
                 ct:comment("HttpcResult = ~p", [HttpcResult]);
             _ ->
@@ -273,7 +273,7 @@ shot_post_with_headers_must_ok(_Config) ->
 shot_delete_without_headers_must_ok(_Config) ->
     case shot:delete("http://httpbin.org/delete") of
         {ok, HttpcResult} ->
-            case shot_utils:get_code(HttpcResult) of
+            case shot:get_code(HttpcResult) of
                 200 ->
                     ct:comment("HttpcResult = ~p", [HttpcResult]);
                 _ ->
