@@ -36,7 +36,7 @@ $ ./rebar3 clean
 * Edit file **rebar.config**:
 ```erlang
 {deps, [
-    {shot, "1.0.0"},
+    {shot, "1.1.0"},
 ]}.
 ```
 ### PUT
