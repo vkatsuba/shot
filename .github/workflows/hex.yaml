@@ -20,5 +20,10 @@ jobs:
       env:
         HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
       run: |
+           git init
+           git remote add origin https://github.com/vkatsuba/shot.git
+           git fetch
+           git add .
+           git checkout $( git tag | tail -1)
            rebar3 edoc
            rebar3 hex publish -r hexpm --yes
