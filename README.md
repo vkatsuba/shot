@@ -2,6 +2,7 @@
 **shot** is a small HTTP client library for Erlang
 
 [![Hex.pm Version](https://img.shields.io/hexpm/v/shot.svg?style=flat)](https://hex.pm/packages/shot)
+[![Coverage Status](https://coveralls.io/repos/github/vkatsuba/shot/badge.svg)](https://coveralls.io/github/vkatsuba/shot)
 
 ## Goals
 Shot aims to provide a simple way for REST calls
