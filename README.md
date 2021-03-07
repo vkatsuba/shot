@@ -132,5 +132,5 @@ shot:multipart(ReqMap).
 v.katsuba.dev@gmail.com
 
 <!-- Badges -->
-[gh]: https://github.com/vkatsuba/shot/workflows/main.yml
+[gh]: https://github.com/vkatsuba/shot/actions/workflows/main.yml
 [gh badge]: https://img.shields.io/github/workflow/status/vkatsuba/shot/CI?style=flat-square
