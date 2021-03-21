@@ -11,7 +11,7 @@ Shot aims to provide a simple way for REST calls
 ## Documentation
 For examples will be used **shot** and test services for requests:
 * [http://ptsv2.com](http://ptsv2.com) - for testing upload files
-* [http://httpbin.org](http://httpbin.org) - for testing GET, POST, PUT etc.
+* [http://httpbin.org](http://httpbin.org) - for testing `GET`, `POST`, `PUT` etc.
 
 ### Build & Run
 ```sh
