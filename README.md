@@ -6,7 +6,7 @@
 [![Build Status][gh badge]][gh]
 
 ## Goals
-Shot aims to provide a simple way for REST calls
+Shot aims to provide a simple way for `REST` calls
 
 ## Documentation
 For examples will be used **shot** and test services for requests:
