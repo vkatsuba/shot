@@ -29,16 +29,13 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       env:
-        CI_COMMIT_REF_NAME: asdfasdfsadfs
+        CI_COMMIT_REF_NAME: ${{ github.ref }}
       run: |
            docker version
            docker buildx ls
            docker buildx inspect --bootstrap
            export CI_COMMIT_DESCRIBE=$(git describe)
-           case "$CI_COMMIT_REF_NAME" in
-             master | stable/*) export LABELS="";;
-           *)                 export LABELS="--label quay.expires-after=7d";;
-           esac
+           LABELS=""
            if [ $CI_COMMIT_REF_NAME == "master" ] ; then
              export TAGS="-t ${REGISTRY}/${BUILD_IMAGE}:${CI_COMMIT_DESCRIBE}"
            else
