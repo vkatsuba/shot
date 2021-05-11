@@ -34,6 +34,11 @@ jobs:
            docker version
            docker buildx ls
            docker buildx inspect --bootstrap
+           export CI_COMMIT_DESCRIBE=$(git describe)
+           case "$CI_COMMIT_REF_NAME" in
+             master | stable/*) export LABELS="";;
+           *)                 export LABELS="--label quay.expires-after=7d";;
+           esac
 
 
 
