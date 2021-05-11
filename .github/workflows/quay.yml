@@ -39,6 +39,11 @@ jobs:
              master | stable/*) export LABELS="";;
            *)                 export LABELS="--label quay.expires-after=7d";;
            esac
+           if [ $CI_COMMIT_REF_NAME == "master" ] ; then
+             export TAGS="-t ${REGISTRY}/${BUILD_IMAGE}:${CI_COMMIT_DESCRIBE}"
+           else
+             export TAGS="-t ${REGISTRY}/${BUILD_IMAGE}:${CI_COMMIT_REF_SLUG}_${CI_COMMIT_DESCRIBE}"
+           fi
 
 
 
