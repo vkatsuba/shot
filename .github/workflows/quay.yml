@@ -1,0 +1,54 @@
+name: quay.io
+
+on:
+  push:
+  pull_request:
+    branches: [ $default-branch ]
+  release:
+    types:
+      - created
+
+jobs:
+  quay:
+    name: quay.io
+    runs-on: ubuntu-latest
+    container:
+      image: jdrouet/docker-with-buildx:stable
+      options: --privileged
+      env:
+        REGISTRY: 'quay.io'
+        BUILD_IMAGE: 'travelping/ergw-c-node'
+    steps:
+    - name: Prepare
+      run: |
+           apk update
+           apk --no-cache upgrade
+           apk --no-cache add docker gcc git libc-dev libc-utils libgcc linux-headers make bash \
+                              musl-dev musl-utils ncurses-dev pcre2 pkgconf scanelf wget zlib \
+                              yaml-dev
+    - uses: actions/checkout@v2
+    - name: Build
+      run: |
+           docker version
+           docker buildx ls
+           docker buildx inspect --bootstrap
+           export CI_COMMIT_DESCRIBE=$(git describe)
+           case "$CI_COMMIT_REF_NAME" in
+             master | stable/*) export LABELS="";;
+           *)                 export LABELS="--label quay.expires-after=7d";;
+           esac
+           if [ $CI_COMMIT_REF_NAME == "master" ] ; then
+             export TAGS="-t ${REGISTRY}/${BUILD_IMAGE}:${CI_COMMIT_DESCRIBE}"
+           else
+             export TAGS="-t ${REGISTRY}/${BUILD_IMAGE}:${CI_COMMIT_REF_SLUG}_${CI_COMMIT_DESCRIBE}"
+           fi
+           docker login -u ${QUAY_USER_ID} -p ${QUAY_TOKEN} ${REGISTRY}
+           docker buildx build \
+                 -f docker/Dockerfile \
+                 ${TAGS} \
+                 ${LABELS} \
+                 --platform=linux/arm64,linux/amd64 \
+                --push --no-cache .
+
+
+
