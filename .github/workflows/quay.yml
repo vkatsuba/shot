@@ -43,7 +43,7 @@ jobs:
            else
              export TAGS="-t ${REGISTRY}/${BUILD_IMAGE}:${CI_COMMIT_REF_SLUG}_${CI_COMMIT_DESCRIBE}"
            fi
-           docker login -u ${secrets.QUAY_USER_ID} -p ${secrets.QUAY_TOKEN} ${REGISTRY}
+           
 
 
 
