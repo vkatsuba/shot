@@ -14,8 +14,9 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        otp: [22.3.4.16, 23.0.4, 23.1.5.0, 23.2.5.0]
+        otp: [22.3.4.16, 23.0.4, 23.1.5.0, 23.2.5.0, 22.22]
     container:
+      if: ${{ otp.otp != '22.22' }}
       image: erlang:${{ matrix.otp }}-alpine
     steps:
     - name: Prepare
