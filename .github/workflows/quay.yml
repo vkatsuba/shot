@@ -24,6 +24,12 @@ jobs:
                               musl-dev musl-utils ncurses-dev pcre2 pkgconf scanelf wget zlib \
                               yaml-dev
     - uses: actions/checkout@v2
+    - name: Login to Quay.io
+      uses: docker/login-action@v1
+      with:
+        registry: quay.io
+        username: ${{ secrets.QUAY_USER_ID }}
+        password: ${{ secrets.QUAY_TOKEN }}
     - name: Build
       env:
         CI_COMMIT_REF_NAME: ${{ github.ref }}
@@ -43,7 +49,6 @@ jobs:
            else
              export TAGS="-t ${REGISTRY}/${BUILD_IMAGE}:${CI_COMMIT_REF_SLUG}_${CI_COMMIT_DESCRIBE}"
            fi
-
            docker buildx build \
                  -f docker/Dockerfile \
                  ${TAGS} \
