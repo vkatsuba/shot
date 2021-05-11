@@ -29,7 +29,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       env:
-        CI_COMMIT_REF_NAME: ${{ github.ref }}
+        CI_COMMIT_REF_NAME: asdfasdfsadfs
       run: |
            docker version
            docker buildx ls
