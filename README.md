@@ -1,5 +1,5 @@
 # Shot
-**shot** is a small HTTP client library for Erlang
+**shot** is a small `HTTP` client library for Erlang
 
 [![Hex.pm Version](https://img.shields.io/hexpm/v/shot.svg?style=flat-square)](https://hex.pm/packages/shot)
 [![Coverage Status](https://img.shields.io/coveralls/github/vkatsuba/shot.svg?style=flat-square)](https://coveralls.io/github/vkatsuba/shot)
