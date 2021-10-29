@@ -26,7 +26,14 @@ jobs:
         run: rebar3 compile
       - name: EUnit tests
         shell: cmd
-        run: rebar3 eunit && echo "::set-output name=exit::1"
-      - if: steps.build_on_windows.outputs.exit != '1'
+        run: |
+             rebar3 eunit
+             if [ $? -eq 0 ]; then
+                 echo "::set-output name=exit::false"
+             else
+                 echo "::set-output name=exit::true"
+             fi
+  #       rebar3 eunit && echo "::set-output name=exit::1"
+      - if: steps.build_on_windows.outputs.exit == 'true'
         run: exit 1
 
