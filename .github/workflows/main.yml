@@ -12,8 +12,6 @@ jobs:
 
   build_on_windows:
     runs-on: windows-latest
-    env:
-      DEBUG: 1
     steps:
       - name: Install Erlang
         run: choco install erlang
@@ -26,5 +24,5 @@ jobs:
         run: rebar3 compile
       - name: EUnit tests
         shell: cmd
-        run: rebar3 eunit
+        run: exit 1
 
