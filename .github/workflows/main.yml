@@ -9,10 +9,26 @@ on:
       - created
 
 jobs:
-  build_on_windows:
+  build_on_windows_debug:
     runs-on: windows-latest
     env:
       DEBUG: 1
+    steps:
+      - name: Install Erlang
+        run: choco install erlang
+      - name: Install Rebar3
+        run: choco install rebar3
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Compile
+        shell: bash
+        run: rebar3 compile
+      - name: EUnit tests
+        shell: bash
+        run: rebar3 eunit
+
+  build_on_windows:
+    runs-on: windows-latest
     steps:
       - name: Install Erlang
         run: choco install erlang
