@@ -20,10 +20,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Compile
-        shell: cmd
+        shell: bash
         run: rebar3 compile
       - name: EUnit tests
-        shell: cmd
+        shell: bash
         id: rebar3-eunit
         run: |
              rebar3 eunit
