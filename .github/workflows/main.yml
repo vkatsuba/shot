@@ -26,6 +26,7 @@ jobs:
         run: rebar3 compile
       - name: EUnit tests
         shell: cmd
+        id: rebar3-eunit
         run: |
              rebar3 eunit
              if [ $? -eq 0 ]; then
@@ -34,6 +35,6 @@ jobs:
                  echo "::set-output name=exit::true"
              fi
   #       rebar3 eunit && echo "::set-output name=exit::1"
-      - if: steps.build_on_windows.outputs.exit == 'true'
+      - if: steps.rebar3-eunit.outputs.exit == 'true'
         run: exit 1
 
