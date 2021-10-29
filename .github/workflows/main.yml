@@ -12,8 +12,6 @@ jobs:
 
   build_on_windows:
     runs-on: windows-latest
-    env:
-      EXIT: 1
     steps:
       - name: Install Erlang
         run: choco install erlang
