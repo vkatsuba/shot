@@ -22,16 +22,14 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Compile
-        shell: bash
         run: rebar3 compile
       - name: EUnit tests
-        shell: bash
         run: |
              rebar3 eunit
              if [ $? -eq 0 ]; then
-                 EXIT=0
+                 export EXIT=0
              else
-                 EXIT=1
+                 export EXIT=1
              fi
   #       rebar3 eunit && echo "::set-output name=exit::1"
       - name: Exit
