@@ -20,9 +20,9 @@ jobs:
           otp-version: "23.2"
         id: install_erlang
       - name: Compile
-        shell: cmd
+        shell: bash
         run: rebar3.exe compile
       - name: EUnit tests
-        shell: cmd
+        shell: bash
         run: rebar3.exe eunit
 
