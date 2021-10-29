@@ -21,8 +21,8 @@ jobs:
         id: install_erlang
       - name: Compile
         shell: bash
-        run: ./rebar3 compile
+        run: $env:PATH = "${{ steps.install_erlang.outputs.erlpath }}\bin;$env:PATH" & ./rebar3 compile
       - name: EUnit tests
         shell: bash
-        run: ./rebar3 eunit
+        run: $env:PATH = "${{ steps.install_erlang.outputs.erlpath }}\bin;$env:PATH" & ./rebar3 eunit
 
