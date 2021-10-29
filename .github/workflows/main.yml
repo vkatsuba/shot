@@ -20,9 +20,9 @@ jobs:
           otp-version: "23.2"
         id: install_erlang
       - name: Compile
-        shell: bash
-        run: $env:PATH = "${{ steps.install_erlang.outputs.erlpath }}\bin;$env:PATH" & ./rebar3 compile
+        shell: cmd
+        run: rebar3.exe compile
       - name: EUnit tests
-        shell: bash
-        run: $env:PATH = "${{ steps.install_erlang.outputs.erlpath }}\bin;$env:PATH" & ./rebar3 eunit
+        shell: cmd
+        run: rebar3.exe eunit
 
