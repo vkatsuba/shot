@@ -12,6 +12,8 @@ jobs:
 
   build_on_windows:
     runs-on: windows-latest
+    env:
+      EXIT: 0
     steps:
       - name: Install Erlang
         run: choco install erlang
@@ -28,11 +30,11 @@ jobs:
         run: |
              rebar3 eunit
              if [ $? -eq 0 ]; then
-                 echo "::set-output name=exit::false"
+                 EXIT=0
              else
-                 echo "::set-output name=exit::true"
+                 EXIT=1
              fi
   #       rebar3 eunit && echo "::set-output name=exit::1"
-      - if: steps.rebar3-eunit.outputs.exit == 'true'
-        run: exit 1
+
+        run: exit $EXIT
 
