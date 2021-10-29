@@ -21,8 +21,8 @@ jobs:
         id: install_erlang
       - name: Compile
         shell: bash
-        run: rebar3 compile
+        run: ./rebar3 compile
       - name: EUnit tests
         shell: bash
-        run: rebar3 eunit
+        run: ./rebar3 eunit
 
